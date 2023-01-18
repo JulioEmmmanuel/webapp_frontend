@@ -49,13 +49,12 @@ export const Select = styled.select`
     }
 `;
 
-export const Button = styled.button`
+export const SubmitButton = styled.button`
     color: white;
     font-weight: bold;
     background-color: #147EDF;
     width: fit-content;
     padding: 20px;
-    align-self: end;
     height: 30px;
     border: none;
     line-height: 0px;
@@ -63,6 +62,31 @@ export const Button = styled.button`
 
     :hover{
         cursor: pointer;
+        background-color: #99C3DB;
     }
+`;
+
+export const CancelButton = styled.button`
+    color: white;
+    font-weight: bold;
+    background-color: #147EDF;
+    width: fit-content;
+    padding: 20px;
+    height: 30px;
+    border: none;
+    line-height: 0px;
+    border-radius:  10px;
+    margin-right: 20px;
+
+    :hover{
+        cursor: pointer;
+        background-color: #99C3DB;
+    }
+`;
+
+export const Buttons = styled.div`
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
 `;
 

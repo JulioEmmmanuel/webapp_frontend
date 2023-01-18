@@ -4,7 +4,7 @@ import {IconWrapper} from "./styles";
 
 const EditIcon = (props) => {
     return (
-    <IconWrapper>
+    <IconWrapper onClick={props.update}>
         <FaEdit size={30}/>
     </IconWrapper>
     );

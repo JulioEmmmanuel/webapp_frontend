@@ -4,7 +4,7 @@ import {IconWrapper} from "./styles";
 
 const DeleteIcon = (props) => {
     return (
-    <IconWrapper>
+    <IconWrapper onClick={props.delete}>
         <ImCross size={30}/>
     </IconWrapper>
     );

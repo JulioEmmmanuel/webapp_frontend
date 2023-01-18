@@ -1,80 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddWidget from "../../Components/AddWidget";
-import CreateService from "../../Components/Forms/CreateService";
+import DeleteForm from "../../Components/Forms/DeleteForm";
+import ServiceForm from "../../Components/Forms/ServiceForm";
 import { Modal } from "../../Components/Modal";
 
 import ServiceCard from "../../Components/ServiceCard";
+import useServices from "../../Hooks/useServices";
 import {Title, ServiceList} from "./styles";
 
 const ServicePage = () => {
 
     const [createOpen, setCreateOpen] = useState(false);
-    const [services, setServices] = useState([
-        {
-            name: "Campaña en redes sociales",
-            periodicity: "Mensual",
-            description: `Lorem ipsum dolor sit amet, consectetur 
-            adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua.`
-        }, 
-        {
-            name: "Desarrollo de aplicación",
-            periodicity: "Quincenal",
-            description: `Lorem ipsum dolor sit amet, consectetur 
-            adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua.`
-        },
-        {
-            name: "Desarrollo de aplicación",
-            periodicity: "Quincenal",
-            description: `Lorem ipsum dolor sit amet, consectetur 
-            adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua.`
-        },
-        {
-            name: "Desarrollo de aplicación",
-            periodicity: "Quincenal",
-            description: `Lorem ipsum dolor sit amet, consectetur 
-            adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua.`
-        },
-        {
-            name: "Desarrollo de aplicación",
-            periodicity: "Quincenal",
-            description: `Lorem ipsum dolor sit amet, consectetur 
-            adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua.`
-        },
-        {
-            title: "Desarrollo de aplicación",
-            periodicity: "Quincenal",
-            description: `Lorem ipsum dolor sit amet, consectetur 
-            adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua.`
-        }
-    
-    ])
+    const [updateOpen, setUpdateOpen] = useState(false);
+    const [updateEl, setUpdateEl] = useState(null);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
+
+    const {services, getData, createData, updateData, deleteData} = useServices()
 
     const toggleCreateOpen = () => {
         setCreateOpen(prevValue => !prevValue)
     }
 
-    const createService = (newService) => {
-        setServices([...services, newService]);
+    const toggleUpdateOpen = () => {
+        setUpdateOpen(prevValue => !prevValue)
     }
 
+    const update = (updateElement) => {
+        setUpdateEl(updateElement);
+        toggleUpdateOpen();
+    }
 
-    
+    const toggleDeleteOpen = () => {
+        setDeleteOpen(prevValue => !prevValue);
+    }
+
+    const deleteItem = (id) => {
+        setDeleteId(id);
+        toggleDeleteOpen()
+    }
+
+    const createService = (newService) => {
+        createData(newService);
+    }
+
+    const updateService = async (data) => {
+        updateData(data.id, {
+            name: data.name,
+                periodicity: data.periodicity,
+                description: data.description,
+                cost: data.cost
+        })      
+    };
+
+    const deleteService = (id) => {
+        deleteData(id);
+    }
+ 
     return(
         <>
             <Title>Servicios</Title>
             <ServiceList>
-                {services.map((service, index) => {
-                    return <ServiceCard key={service.name}
+                {(services) && services.map((service, index) => {
+                    return <ServiceCard key={service.id}
                     isOdd = {(index+1)%2===0}
                     name = {service.name}
                     periodicity = {service.periodicity}
                     description = {service.description}
+                    cost = {service.cost}
+                    update = {()=>{update(service)}}
+                    delete = {()=>{deleteItem(service.id)}}
                     />
                 }
                 )};
@@ -84,7 +79,28 @@ const ServicePage = () => {
 
             {createOpen && 
             <Modal>
-                <CreateService create={createService} close={toggleCreateOpen}/>
+                <ServiceForm 
+                    action={createService} 
+                    close={toggleCreateOpen}/>
+            </Modal>}
+
+            {updateOpen && 
+            <Modal>
+                <ServiceForm 
+                    id={updateEl.id}
+                    name={updateEl.name} 
+                    periodicity={updateEl.periodicity}
+                    cost={updateEl.cost}
+                    description={updateEl.description}
+                    action={updateService} 
+                    close={toggleUpdateOpen}/>
+            </Modal>}
+
+            {deleteOpen && 
+            <Modal>
+                <DeleteForm
+                    delete={()=>deleteService(deleteId)}
+                    close={toggleDeleteOpen}/>
             </Modal>}
         </>
     );
