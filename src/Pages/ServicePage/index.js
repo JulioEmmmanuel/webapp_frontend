@@ -99,6 +99,7 @@ const ServicePage = () => {
             {deleteOpen && 
             <Modal>
                 <DeleteForm
+                    component={"servicio"}
                     delete={()=>deleteService(deleteId)}
                     close={toggleDeleteOpen}/>
             </Modal>}

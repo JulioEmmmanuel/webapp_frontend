@@ -6,7 +6,7 @@ const DeleteForm = (props) => {
 
     return (
     <Card>
-        <h3>¿Estás segurx de que deseas eliminar el servicio?</h3>
+        <h3>¿Estás segurx de que deseas eliminar el {props.component}?</h3>
         
         <Buttons>
             <CancelButton onClick={props.close}>Cancelar</CancelButton>
