@@ -12,3 +12,9 @@ export const ChargeList = styled.div`
     flex-direction: column;
     align-items: center;
 `;
+
+export const SearchSection = styled.div`
+    width: 70%;
+    margin: auto;
+    display: flex;
+`
