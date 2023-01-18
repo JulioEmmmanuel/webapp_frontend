@@ -6,9 +6,9 @@ export const Title = styled.h2`
     font-weight: bold;
 `;
 
-export const ServiceList = styled.div`
+export const ChargeList = styled.div`
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 `;
